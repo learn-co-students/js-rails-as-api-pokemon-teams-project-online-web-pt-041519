@@ -67,4 +67,8 @@ body {
       grid-template-columns: 1fr 1fr 1fr 1fr;
     }
   }
+
+  .add_button_hidden {
+    visibility: hidden;
+  }
   
