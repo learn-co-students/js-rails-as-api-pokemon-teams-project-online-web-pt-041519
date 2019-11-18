@@ -1,11 +1,13 @@
 class PokemonsController < ApplicationController
 
     def create
-        @pokemon = Pokemon.create(nickname: name, species: species, trainer_id: trainer.id)
+        name = Faker::Name.first_name
+        species = Faker::Games::Pokemon.name
+        pokemon = Pokemon.create(nickname: name, species: species, trainer_id: params[:trainer_id])
     end
 
     def destroy
-        @pokemon = Pokemon.find_by(id: params[:id])
-        @pokemon.destroy 
+        pokemon = Pokemon.find_by(id: params[:id])
+        pokemon.destroy 
     end
 end

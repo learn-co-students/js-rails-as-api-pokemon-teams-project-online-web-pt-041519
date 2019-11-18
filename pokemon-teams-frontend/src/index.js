@@ -37,7 +37,7 @@ function renderTrainers(json) {
     addPokemonButton.appendChild(buttonText)
     addPokemonButton.setAttribute("data-trainer-id", `${json[trainer]["id"]}`)
     addPokemonButton.addEventListener('click', event => {
-      alert(event)
+      addPokemonPost(event)
     })
     divCard.appendChild(addPokemonButton)
 
@@ -55,7 +55,7 @@ function renderTrainers(json) {
       releaseButton.setAttribute("class", "release")
       releaseButton.setAttribute("data-pokemon-id", `${json[trainer].pokemons[i]["id"]}`)
       releaseButton.addEventListener('click', event => {
-        alert(event)
+        removePokemon(event)
       })
 
       li.appendChild(releaseButton)
@@ -67,4 +67,36 @@ function renderTrainers(json) {
     const trainerCollection = document.body.querySelector("main")
     trainerCollection.appendChild(divCard)
   }
+}
+
+// add pokemon
+// 'POST' request to create new pokemon objects
+function addPokemonPost(event) {
+  return fetch(POKEMONS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      nickname: event.name, 
+      species: event.species, 
+      trainer_id: event.target.getAttribute("data-trainer-id")
+    })
+  })
+}
+
+// delete pokemon
+// 'DELETE' request to destroy selected pokemon objects
+function removePokemon(event) {
+  return fetch(`${POKEMONS_URL}/${event.target.getAttribute("data-pokemon-id")}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      id: event.target.getAttribute("data-pokemon-id")
+    })
+  })
 }
