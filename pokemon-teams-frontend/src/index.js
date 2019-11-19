@@ -16,9 +16,13 @@ document.addEventListener("DOMContentLoaded", (e) => {
 
 // fetches and returns the json of all the trainers with their pokemans
 async function fetchTrainers(){
-    const res = await fetch(TRAINERS_URL);
-    const trainerJson = await res.json();
-    return trainerJson;
+    try {
+        const res = await fetch(TRAINERS_URL);
+        const trainerJson = await res.json();
+        return trainerJson;
+    } catch (error) {
+        mainContainer.innerHTML = `<h1>${error.message} <br> Run the server!</h1> `
+    };
 };
 
 // builds the card for the individual trainer
@@ -74,7 +78,7 @@ async function bootFromTeam(event){
         });
         alert(`${pokeName} is sent to the daycare.`);
         event.target.parentNode.remove();
-    } catch(error) {
+    } catch (error) {
         event.target.parentNode.parentNode.innerHTML = "<h1>Something went wrong. The Pokemon is too clingy to leave.</h1>";
     };
 
@@ -95,7 +99,7 @@ async function addPokemon(event){
         let response = await fetch(POKEMONS_URL, configObj);
         let pokeJson = await response.json();
         return pokeJson;
-    } catch(error) {
+    } catch (error) {
         event.parentNode.innerHTML =`<h2>Run the server you ding dong.</h2> ${error.message}`;
     };
 };
