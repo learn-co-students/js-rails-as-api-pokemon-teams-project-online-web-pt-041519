@@ -67,15 +67,16 @@ function renderPokemon(pokemon){
 async function bootFromTeam(event){
     const pokeId = event.target.getAttribute("data-pokemon-id");
     const pokeName = event.target.parentNode.innerText.split(' ')[0];
-    try {
-        fetch(POKEMONS_URL + '/' + pokeId, {
+    let configObj = {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
         body: JSON.stringify(pokeId)
-        });
+    };
+    try {
+        await fetch(POKEMONS_URL + '/' + pokeId, configObj);
         alert(`${pokeName} is sent to the daycare.`);
         event.target.parentNode.remove();
     } catch (error) {
