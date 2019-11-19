@@ -53,7 +53,11 @@ function renderTrainers(trainer){
 
     const addBtn = pokeContainer.querySelector("button");
     addBtn.addEventListener("click", (e) => {
-        addPokemon(e);
+        addPokemon(e).then(p => {
+            const pokeLi = renderPokemon(p);
+            pokeList.appendChild(pokeLi);
+        });
+        // console.log(p)
     });
 
     // trainer.pokemons.forEach(pokemon => {
