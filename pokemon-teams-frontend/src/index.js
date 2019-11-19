@@ -31,7 +31,7 @@ function renderTrainers(trainer){
     pokeContainer.className = "card";
     pokeContainer.setAttribute("data-id", `${trainer.id}`); 
     pokeContainer.innerHTML = `<p>${trainer.name}</p><button data-trainer-id="${trainer.id}">Add Pokemon</button><ul></ul>`;
-    let pokeList = pokeContainer.querySelector("ul");
+    const pokeList = pokeContainer.querySelector("ul");
     // Iterate over each pokemon and render them on the card
     trainer.pokemons.forEach(pokemon => {
         const pokeLi = renderPokemon(pokemon);
@@ -41,10 +41,15 @@ function renderTrainers(trainer){
     const addBtn = pokeContainer.querySelector("button");
     addBtn.addEventListener("click", (e) => {
         addPokemon(e).then(p => {
-            const pokeLi = renderPokemon(p);
-            let pokeName = pokeLi.innerText.split(' ')[0];
-            alert(`${pokeName} has joined your team`);
-            pokeList.appendChild(pokeLi);
+            if (p.message !== 'Your team is full. Release a Pokemon before you add one.') {
+                const pokeLi = renderPokemon(p);
+                const pokeName = pokeLi.innerText.split(' ')[0];
+                alert(`${pokeName} has joined your team`);
+                pokeList.appendChild(pokeLi);
+
+            } else {
+                alert(p.message)
+            };
         });
     });
     // Append to main to build each trainer card
