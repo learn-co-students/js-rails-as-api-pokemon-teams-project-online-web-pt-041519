@@ -8,8 +8,6 @@ const buildCard = (arg) => {
 
   let div = document.createElement('div')
   div.className = 'card'
-
-
   
   let btn = document.createElement('button')
   btn.setAttribute('data-trainer-id', arg.attributes.id)
@@ -17,6 +15,7 @@ const buildCard = (arg) => {
   btn.addEventListener("click",(event) => {
     addPokemon(event)
   })
+
   let ul = document.createElement('ul')
   let p = document.createElement('p')
   p.innerText = arg.attributes.name
@@ -76,19 +75,6 @@ async function deletePokemon(pokemon){
   obj.remove
 }
 
-// async function getPokemon() {
-//   try{
-//     const resp = await fetch(POKEMONS_URL)
-//     const pok = await resp.json()
-//     pok.data.map(pokemon => addPokemonToCard(pokemon))
- 
-//   } catch (error) {
-//     cardCollection.innerHTML = ' this error occurred in the getPokemons function'
-//     console.log(error)
-//   }
-// }
-
-
 async function getTrainers() {
   try{
     const resp = await fetch(TRAINERS_URL)
@@ -103,8 +89,6 @@ async function getTrainers() {
 }
 
 
-
 document.addEventListener('DOMContentLoaded', function(){
   getTrainers()
-  // getPokemons()
 })
