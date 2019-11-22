@@ -16,12 +16,11 @@ const buildCard = (arg) => {
     addPokemon(event)
   })
 
-  let ul = document.createElement('ul')
   let p = document.createElement('p')
   p.innerText = arg.attributes.name
-  p.appendChild(btn)
 
-  
+  let ul = document.createElement('ul')
+
   arg.attributes.pokemons.forEach(pokemon => {ul.append(listPokemon(pokemon))})
   div.append(p, btn, ul)
   cardCollection.appendChild(div)
@@ -32,21 +31,27 @@ const listPokemon = (pokemon) => {
   
   let li = document.createElement('li')
   li.innerHTML = `${pokemon.nickname} (${pokemon.species})`
-  bt = document.createElement('button')
+
+  let bt = document.createElement('button')
   bt.setAttribute('data-pokemon-id', pokemon.id)
-  bt.innerText = 'Release'
-  bt.className = "release"
-  li.appendChild(bt)
   bt.addEventListener("click", (event) => {
     deletePokemon(event)
     li.innerHTML = ""
   })
+  bt.innerText = 'Release'
+  bt.className = "release"
+
+
+  li.appendChild(bt)
+
   return li
 }
 
 async function addPokemon(event){
+
   let ul = event.target.parentNode.querySelector('ul')
   let trainerId = event.target.getAttribute("data-trainer-id")
+
   let configObj = {
     method: "POST",
     headers: {
@@ -54,7 +59,8 @@ async function addPokemon(event){
       "Accept": "application/json"
     },
     body: JSON.stringify({trainer_id: trainerId})
-  };
+  }
+
   let response = await fetch(POKEMONS_URL, configObj)
   let newPokemon = await response.json()
   
@@ -62,20 +68,23 @@ async function addPokemon(event){
 }
 
 async function deletePokemon(pokemon){
+
   let configObj = {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
       "Accept": "application/json"
-    },
+    }
   }
+
   let response = await fetch(POKEMONS_URL+'/'+pokemon.target.getAttribute('data-pokemon-id'), configObj)
   let obj = await response.json()
-  console.log(obj)
   obj.remove
+
 }
 
 async function getTrainers() {
+
   try{
     const resp = await fetch(TRAINERS_URL)
     const trainers = await resp.json()
@@ -83,9 +92,10 @@ async function getTrainers() {
     trainers.data.map(trainer => buildCard(trainer))
  
   } catch (error) {
-    cardCollection.innerHTML = ' this error occurred in the getTrainers function'
+    cardCollection.innerHTML = 'Something went wrong. Check console.log for more details.'
     console.log(error)
   }
+
 }
 
 
