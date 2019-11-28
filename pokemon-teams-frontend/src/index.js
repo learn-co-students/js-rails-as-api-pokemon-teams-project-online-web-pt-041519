@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const name = document.createElement('p')
             name.innerText = trainer.name
             // Add 'add pokemon' button
-            const btn = documet.createElement('button')
+            const btn = document.createElement('button')
             btn.setAttribute('data-trainer-id', trainer.id)
             btn.innerText = 'Add Pokemon'
             btn.addEventListener('click', (e) => {
@@ -65,15 +65,15 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => container.innerHTML = error.message)
     }
 
-    function renderPokemon(e) {
+    function renderPokemon(poke) {
         // Create li for each pokemon el
         const li = document.createElement('li') // let?????
-        li.innerText = `${pokemon.nickname} (${pokemon.species})`
+        li.innerText = `${poke.nickname} (${poke.species})`
 
         // Create release button
         const release = document.createElement('button')
         release.className = 'release'
-        release.setAttribute('data-pokemon-id', pokemon.id)
+        release.setAttribute('data-pokemon-id', poke.id)
         release.innerText = 'Release'
         release.addEventListener('click', (e) => {
             e.preventDefault()
@@ -96,7 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Fetch delete request 
         fetch(thisPokeUrl, opt)
             .then(resp => resp.json())
-            .then(p => p.target.parentNode.remove())
+            .then(p => poke.target.parentNode.remove())
             // Reveal error, if any occur
             .catch(error => container.innerHTML = error.message)
     }
