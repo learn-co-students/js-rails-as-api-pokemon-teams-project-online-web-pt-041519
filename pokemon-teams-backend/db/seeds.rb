@@ -8,8 +8,10 @@
 require 'faker'
 require 'securerandom'
  
-Trainer.delete_all
-Pokemon.delete_all
+
+Pokemon.destroy_all
+Trainer.destroy_all
+
  
 trainers_name = [
   'Natalie',
@@ -37,4 +39,8 @@ trainer_collection.each do |trainer|
     species = Faker::Games::Pokemon.name
     Pokemon.create(nickname: name, species: species, trainer_id: trainer.id)
   end
+end
+
+100.times do 
+  Pokemon.create(nickname: Faker::Name.first_name, species: Faker::Games::Pokemon.name)
 end

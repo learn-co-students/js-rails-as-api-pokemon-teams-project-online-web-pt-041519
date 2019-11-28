@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-
+  
+  patch 'trainers/:trainer_id/pokemon/:pokemon_id' => 'pokemons#add_or_remove_trainer'
   get 'pokemon/rand' => 'pokemons#rand', as: 'rand_pokemon'
   resources :pokemons, path: 'pokemon'
   resources :trainers

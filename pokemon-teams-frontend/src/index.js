@@ -8,10 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', e => {
         if(e.target.tagName === 'BUTTON'){
             const div = getParentDiv(e.target)
+            const trainerId = div.dataset.id
             if(e.target.classList.contains('release')){
                 const pokemonId = e.target.dataset.pokemonId
-                
-                const trainerId = div.dataset.id
                 removePokemon(trainerId, pokemonId)
             }else{
                 addPokemonToTrainer(trainerId)

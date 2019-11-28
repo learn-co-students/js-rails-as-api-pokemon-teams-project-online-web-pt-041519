@@ -9,3 +9,15 @@ const getParentDiv = (el) => {
     }
     return currEl
 }
+
+const getTrainerCard = (trainerId) => {
+    const cards = Array.from(document.querySelectorAll('.card'))
+    return cards.find(el => el.dataset.id == trainerId)
+}
+
+const getLastPokemonAdded = tid => {
+    const card = getTrainerCard(tid)
+    const lis = Array.from(card.querySelectorAll('li'))
+    const lastLi = lis[lis.length - 1]
+    return lastLi
+}
